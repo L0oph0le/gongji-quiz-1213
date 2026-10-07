@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>12·13 公祭跑 · 知识答题</title>
+<style>
+:root{
+  --bg:#0d1420; --bg2:#131c2c;
+  --gold:#d8b06a; --gold-soft:rgba(216,176,106,.35);
+  --red:#b03428; --ink:#e8e4da; --dim:#8f8c84;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:"Songti SC","Noto Serif SC",serif;
+  background:radial-gradient(1200px 800px at 50% -10%,#1b2536 0%,var(--bg) 55%,#0a0f18 100%);
+  color:var(--ink); min-height:100vh;
+  display:flex; align-items:center; justify-content:center; padding:24px 16px;
+}
+.card{
+  width:100%; max-width:520px;
+  background:linear-gradient(165deg,rgba(255,255,255,.045),rgba(255,255,255,.015));
+  border:1px solid rgba(216,176,106,.28); border-radius:18px;
+  padding:34px 28px 30px; position:relative; overflow:hidden;
+  box-shadow:0 24px 60px rgba(0,0,0,.45);
+  animation:rise .5s ease both;
+}
+.card::before{
+  content:""; position:absolute; inset:10px; border:1px solid rgba(216,176,106,.14);
+  border-radius:12px; pointer-events:none;
+}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.badge{
+  display:inline-block; font-size:12px; letter-spacing:4px; color:var(--gold);
+  border:1px solid var(--gold-soft); border-radius:999px; padding:5px 16px 4px;
+  font-family:"PingFang SC",sans-serif; margin-bottom:18px;
+}
+h1{font-size:26px; font-weight:700; letter-spacing:2px;
+  background:linear-gradient(180deg,#f2d492,#b8532f);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  margin-bottom:8px;}
+.sub{font-size:13px; color:var(--dim); font-family:"PingFang SC",sans-serif;
+  letter-spacing:1px; margin-bottom:26px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:13px;color:var(--gold);letter-spacing:2px;
+  font-family:"PingFang SC",sans-serif;margin-bottom:7px;}
+.field input{
+  width:100%; padding:13px 15px; font-size:16px; color:var(--ink);
+  background:rgba(255,255,255,.05); border:1px solid rgba(216,176,106,.25);
+  border-radius:10px; outline:none; transition:.25s; font-family:inherit;
+}
+.field input:focus{border-color:var(--gold); background:rgba(216,176,106,.06);
+  box-shadow:0 0 0 3px rgba(216,176,106,.12);}
+.btn{
+  width:100%; margin-top:10px; padding:15px; font-size:17px; letter-spacing:6px;
+  color:#1a1206; font-weight:700; font-family:inherit; cursor:pointer;
+  background:linear-gradient(180deg,#ecd08e,#c99b4e); border:none; border-radius:10px;
+  transition:.2s; box-shadow:0 6px 18px rgba(201,155,78,.25);
+}
+.btn:active{transform:scale(.97);}
+.btn.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold-soft);
+  box-shadow:none;letter-spacing:3px;font-size:14px;padding:12px;}
+.progress{height:3px;background:rgba(255,255,255,.08);border-radius:99px;overflow:hidden;margin-bottom:26px;}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,#c99b4e,#e8c584);
+  border-radius:99px;transition:width .4s ease;}
+.qmeta{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);
+  font-family:"PingFang SC",sans-serif;letter-spacing:2px;margin-bottom:12px;}
+.qtext{font-size:18.5px;line-height:1.75;margin-bottom:24px;}
+.opt{
+  display:block;width:100%;text-align:left;margin-bottom:12px;padding:14px 16px;
+  font-size:15.5px;line-height:1.6;color:var(--ink);font-family:inherit;cursor:pointer;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;transition:.2s;
+}
+.opt:hover{border-color:var(--gold-soft);background:rgba(216,176,106,.05);}
+.opt .k{color:var(--gold);margin-right:10px;font-family:"PingFang SC",sans-serif;}
+.opt.correct{border-color:#7fb069;background:rgba(127,176,105,.12);color:#cfe6c2;}
+.opt.wrong{border-color:var(--red);background:rgba(176,52,40,.14);color:#f0c4be;}
+.opt.done{cursor:default;}
+.explain{
+  display:none;font-size:13px;line-height:1.8;color:var(--dim);
+  border-left:2px solid var(--gold-soft);padding:10px 14px;margin:4px 0 18px;
+  font-family:"PingFang SC",sans-serif;background:rgba(255,255,255,.02);border-radius:0 8px 8px 0;
+}
+.explain.show{display:block;animation:rise .3s ease both;}
+.score-ring{width:150px;height:150px;margin:6px auto 18px;position:relative;}
+.score-ring svg{transform:rotate(-90deg);}
+.score-ring .num{position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;}
+.score-ring .num b{font-size:38px;color:#f2d492;}
+.score-ring .num span{font-size:12px;color:var(--dim);font-family:"PingFang SC",sans-serif;}
+.result-title{text-align:center;font-size:20px;letter-spacing:3px;margin-bottom:4px;}
+.result-pass{text-align:center;font-size:14px;font-family:"PingFang SC",sans-serif;margin-bottom:22px;}
+.result-pass.ok{color:#9fc98a;} .result-pass.no{color:var(--dim);}
+.rank{margin-top:26px;border-top:1px dashed rgba(216,176,106,.25);padding-top:20px;}
+.rank h3{font-size:15px;letter-spacing:4px;color:var(--gold);margin-bottom:14px;text-align:center;}
+.rank table{width:100%;border-collapse:collapse;font-family:"PingFang SC",sans-serif;}
+.rank th{font-size:11px;color:var(--dim);font-weight:400;letter-spacing:2px;
+  padding:6px 4px;text-align:left;border-bottom:1px solid rgba(255,255,255,.1);}
+.rank td{font-size:13.5px;padding:9px 4px;border-bottom:1px solid rgba(255,255,255,.05);}
+.rank .me td{color:#f2d492;}
+.hidden{display:none!important}
+.review{margin-top:20px;}
+.review summary{cursor:pointer;font-size:13px;color:var(--gold);letter-spacing:2px;
+  font-family:"PingFang SC",sans-serif;text-align:center;margin-bottom:12px;list-style:none;}
+.review .item{font-size:13px;line-height:1.7;margin-bottom:14px;font-family:"PingFang SC",sans-serif;}
+.review .item b{color:var(--ink);font-family:"Songti SC",serif;font-size:14.5px;}
+.review .ok{color:#9fc98a;} .review .bad{color:#d98c83;}
+</style>
+<base target="_blank">
+</head>
+<body>
+<div class="card">
+
+  <!-- ① 报名页 -->
+  <div id="page-start">
+    <span class="badge">12 · 13 国家公祭日</span>
+    <h1>公祭跑 · 知识答题</h1>
+    <p class="sub">网络安全 × 历史知识 · 答对 6 题可获精美书签</p>
+    <div class="field"><label>姓 名</label><input id="name" placeholder="请输入姓名" maxlength="12"></div>
+    <div class="field"><label>学 号</label><input id="sid" placeholder="请输入学号" maxlength="20"></div>
+    <button class="btn" onclick="start()">开始答题</button>
+  </div>
+
+  <!-- ② 答题页 -->
+  <div id="page-quiz" class="hidden">
+    <div class="qmeta"><span id="q-no"></span><span id="q-timer">00:00</span></div>
+    <div class="progress"><i id="bar"></i></div>
+    <p class="qtext" id="q-text"></p>
+    <div id="options"></div>
+    <div class="explain" id="explain"></div>
+    <button class="btn hidden" id="nextBtn" onclick="next()">下一题</button>
+  </div>
+
+  <!-- ③ 结果页 -->
+  <div id="page-result" class="hidden">
+    <div class="score-ring">
+      <svg width="150" height="150">
+        <circle cx="75" cy="75" r="64" fill="none" stroke="rgba(255,255,255,.08)" stroke-width="8"/>
+        <circle id="ring" cx="75" cy="75" r="64" fill="none" stroke="url(#g)" stroke-width="8"
+          stroke-linecap="round" stroke-dasharray="402" stroke-dashoffset="402"/>
+        <defs><linearGradient id="g"><stop offset="0" stop-color="#c99b4e"/><stop offset="1" stop-color="#f0d492"/></linearGradient></defs>
+      </svg>
+      <div class="num"><b id="score-num">0</b><span>分 / 100</span></div>
+    </div>
+    <p class="result-title" id="result-title"></p>
+    <p class="result-pass" id="result-pass"></p>
+    <button class="btn ghost" onclick="location.reload()">再答一次</button>
+    <details class="review"><summary>查看题目解析 ▾</summary><div id="review-list"></div></details>
+    <div class="rank">
+      <h3>排行榜</h3>
+      <table><thead><tr><th>名次</th><th>姓名</th><th>学号</th><th>得分</th><th>用时</th></tr></thead>
+      <tbody id="rank-body"></tbody></table>
+    </div>
+  </div>
+</div>
+
+<script>
+const QUESTIONS=[
+ {q:"关于“钓鱼网站”的防范，下列说法错误的是？",
+  o:["应仔细核对网址域名，警惕与官网相似的仿冒域名","浏览器显示“HTTPS锁形标志”即可完全放心，绝不可能是钓鱼网站","通过搜索引擎广告位进入的网站也需核实其真实性","涉及账号密码输入的页面，应从官方App或手动输入网址进入"],a:1,
+  e:"HTTPS只保证传输加密，钓鱼网站同样可以申请证书——锁形标志不代表网站身份真实。"},
+ {q:"用户A的密码数据库泄露，密码全部经过哈希运算存储。攻击者拿到哈希值后，无法直接还原出原密码的做法是？",
+  o:["使用彩虹表进行反向查询","用加盐后的哈希值进行暴力破解","对常见弱口令预先计算哈希后比对","直接查看哈希值本身"],a:3,
+  e:"哈希算法单向不可逆，哈希值本身无法看出密码；但弱口令可被彩虹表破解，故存储时应加盐。"},
+ {q:"连接名为“Starbucks_Free”的免费WiFi后，哪种攻击可让攻击者截获你未加密的通信内容？",
+  o:["中间人攻击（MITM）","拒绝服务攻击（DoS）","缓冲区溢出攻击","暴力破解攻击"],a:0,
+  e:"假热点配合中间人攻击可截获明文流量。"},
+ {q:"关于双因素认证（2FA），下列理解正确的是？",
+  o:["设置两个不同的密码即构成双因素认证","密码属于“你知道的东西”，短信验证码属于“你拥有的东西”，二者组合才是双因素","开启2FA后账号绝对不会再被盗","指纹与密码同时使用时，指纹属于“你知道的东西”"],a:1,
+  e:"双因素的精髓是不同类别的凭证组合，两个密码同属“所知”，不构成双因素。"},
+ {q:"收到“教务处”邮件，称系统升级需点击链接验证统一身份认证密码。邮件用语规范，但发件地址为 jwc-edu@163.com。最合理的判断是？",
+  o:["用语正规，应为真实通知","仅凭公务用语不能确认真伪，发件域名为公共邮箱而非学校官方域名，高度疑似钓鱼，应通过官方渠道核实","先点链接看看页面像不像真的","转发给辅导员求证不会有风险"],a:1,
+  e:"发件域名是识别钓鱼邮件的关键信号，官方通知应使用学校域名邮箱。"},
+ {q:"南京大屠杀期间，参与设立“南京安全区”并庇护数十万中国平民的德国商人是？",
+  o:["拉贝","魏特琳","辛德贝格","马吉"],a:0,
+  e:"约翰·拉贝任安全区国际委员会主席，《拉贝日记》为重要证据。"},
+ {q:"新中国成立后，审判南京大屠杀元凶谷寿夫的法庭是？",
+  o:["远东国际军事法庭","南京审判战犯军事法庭","最高人民法院特别法庭","国民政府军事委员会调查统计局"],a:1,
+  e:"谷寿夫1947年由南京审判战犯军事法庭判处死刑。"},
+ {q:"在东京审判中，中方担任检察官、在法庭上与日方激烈辩论的是？",
+  o:["梅汝璈","向哲濬","倪征燠","裘劭恒"],a:1,
+  e:"向哲濬任中方检察官，倪征燠任首席顾问，梅汝璈为中国法官。"},
+ {q:"以搜集南京大屠杀史料、著书揭露真相闻名的华裔女作家张纯如，其代表作为？",
+  o:["《南京暴行：被遗忘的大屠杀》","《拉贝日记》","《魏特琳日记》","《东史郎日记》"],a:0,
+  e:"《南京暴行：被遗忘的大屠杀》；其余均为日记类史料。"},
+ {q:"2014年首个国家公祭仪式上，习近平总书记强调举行公祭是要唤起人们对和平的向往，并指出？",
+  o:["历史不会因时代变迁而改变，事实也不会因巧舌抵赖而消失","忘记历史就意味着背叛，否认罪责就意味着重犯","和平必须捍卫，正义必须伸张","以上表述均符合讲话精神"],a:3,
+  e:"三句均为公祭讲话核心论述，强调史实不可抹杀、和平必须捍卫。"}
+];
+const PASS=6, KEY="memorialQuizRank1213";
+let idx=0, score=0, wrong=[], sec=0, timer=null, name="", sid="";
+
+function start(){
+  name=document.getElementById("name").value.trim();
+  sid=document.getElementById("sid").value.trim();
+  if(!name||!sid){alert("请先填写姓名和学号");return;}
+  document.getElementById("page-start").classList.add("hidden");
+  document.getElementById("page-quiz").classList.remove("hidden");
+  timer=setInterval(()=>{sec++;document.getElementById("q-timer").textContent=
+    String(Math.floor(sec/60)).padStart(2,"0")+":"+String(sec%60).padStart(2,"0");},1000);
+  render();
+}
+function render(){
+  const Q=QUESTIONS[idx];
+  document.getElementById("q-no").textContent=`第 ${idx+1} / ${QUESTIONS.length} 题`;
+  document.getElementById("bar").style.width=(idx/QUESTIONS.length*100)+"%";
+  document.getElementById("q-text").textContent=Q.q;
+  const box=document.getElementById("options"); box.innerHTML="";
+  const keys=["A","B","C","D"];
+  Q.o.forEach((opt,i)=>{
+    const b=document.createElement("button");
+    b.className="opt"; b.innerHTML=`<span class="k">${keys[i]}</span>${opt}`;
+    b.onclick=()=>pick(b,i); box.appendChild(b);
+  });
+  document.getElementById("explain").className="explain";
+  document.getElementById("nextBtn").classList.add("hidden");
+}
+function pick(btn,i){
+  const Q=QUESTIONS[idx], opts=document.querySelectorAll(".opt");
+  opts.forEach(o=>o.classList.add("done"));
+  if(i===Q.a){score++; btn.classList.add("correct");}
+  else{btn.classList.add("wrong"); wrong.push(idx); opts[Q.a].classList.add("correct");}
+  const ex=document.getElementById("explain");
+  ex.textContent="解析："+Q.e; ex.classList.add("show");
+  const nb=document.getElementById("nextBtn");
+  nb.textContent = idx===QUESTIONS.length-1 ? "查看成绩" : "下一题";
+  nb.classList.remove("hidden");
+}
+function next(){
+  idx++;
+  if(idx<QUESTIONS.length){render(); return;}
+  clearInterval(timer);
+  finish();
+}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0");}
+function finish(){
+  document.getElementById("page-quiz").classList.add("hidden");
+  document.getElementById("page-result").classList.remove("hidden");
+  const total=QUESTIONS.length, sc=Math.round(score/total*100);
+  document.getElementById("score-num").textContent=sc;
+  const ring=document.getElementById("ring");
+  ring.style.transition="stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)";
+  requestAnimationFrame(()=>ring.style.strokeDashoffset=402*(1-score/total));
+  const ok=score>=PASS;
+  document.getElementById("result-title").textContent = ok?"铭记历史 · 以技报国":"再接再厉 · 继续学习";
+  document.getElementById("result-pass").textContent = ok
+    ? `恭喜！答对 ${score} 题，可凭此页面至终点纪念区领取精美书签一枚`
+    : `答对 ${score} 题，答对 ${PASS} 题即可领取书签，点击上方按钮可再答一次`;
+  document.getElementById("result-pass").className="result-pass "+(ok?"ok":"no");
+  // 排行榜（同一学号保留最好成绩）
+  let rank=JSON.parse(localStorage.getItem(KEY)||"[]");
+  const old=rank.find(r=>r.sid===sid);
+  if(!old||score>old.score||(score===old.score&&sec<old.sec))
+    rank=rank.filter(r=>r.sid!==sid).concat([{name,sid,score,sec}]);
+  localStorage.setItem(KEY,JSON.stringify(rank));
+  rank.sort((a,b)=>b.score-a.score||a.sec-b.sec);
+  document.getElementById("rank-body").innerHTML=rank.slice(0,10).map((r,i)=>
+    `<tr class="${r.sid===sid?'me':''}"><td>${["🥇","🥈","🥉"][i]||(i+1)}</td><td>${r.name}</td><td>${r.sid}</td><td>${r.score*10}</td><td>${fmt(r.sec)}</td></tr>`).join("");
+  // 解析回顾
+  document.getElementById("review-list").innerHTML=QUESTIONS.map((Q,i)=>{
+    const hit=!wrong.includes(i);
+    return `<div class="item"><b>第${i+1}题</b> <span class="${hit?'ok':'bad'}">${hit?"✓ 正确":"✗ 错（正确答案："+["A","B","C","D"][Q.a]+"）"}</span><br>${Q.e}</div>`;
+  }).join("");
+}
+</script>
+</body>
+</html>
